@@ -1,0 +1,39 @@
+graph TB
+    subgraph Apps["📱 应用层"]
+        Single["单 Agent 示例<br/>工具调用"]
+        Multi["多 Agent 示例<br/>调研助手"]
+    end
+
+    subgraph Dispatcher["📋 Dispatcher 调度层"]
+        Plan["Task Planner<br/>LLM 任务拆分"]
+        Dispatch["Subtask Dispatcher<br/>分发到 Worker"]
+        Merge["Result Merger<br/>汇总生成报告"]
+        Retry["Retry Handler<br/>失败重试"]
+    end
+
+    subgraph Agent["🤖 Agent 层"]
+        BaseAgent["BaseAgent<br/>run / think / act"]
+        Tools["Tool System<br/>装饰器注册 + Schema 生成"]
+        Memory["Memory Layer<br/>滑动窗口 / 向量检索"]
+    end
+
+    subgraph LLM["🔌 LLM Provider 层"]
+        OpenAI["OpenAI"]
+        DeepSeek["DeepSeek"]
+        Qwen["Qwen"]
+    end
+
+    Single --> BaseAgent
+    Multi --> Dispatcher
+    Plan --> Dispatch --> Merge
+    Dispatch --> Retry
+
+    BaseAgent --> Tools
+    BaseAgent --> Memory
+    BaseAgent --> LLM
+    Dispatch --> BaseAgent
+
+    style Plan fill:#4a90d9,color:#fff
+    style BaseAgent fill:#34a853,color:#fff
+    style Tools fill:#f5a623,color:#fff
+    style Memory fill:#9b59b6,color:#fff

@@ -1,0 +1,15 @@
+# Lightweight Agent Framework — Dependencies
+# Python 3.10+ required
+
+# ── Core ──────────────────────────────────────────
+pydantic>=2.0.0
+httpx>=0.25.0
+python-dotenv>=1.0.0
+
+# ── Optional: Vector Memory ───────────────────────
+faiss-cpu>=1.7.0
+sentence-transformers>=2.2.0
+
+# ── Development ───────────────────────────────────
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
