@@ -1,0 +1,41 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\16965\AppData\Local\Programs\Python\Python311\python.exe
+cachedir: .pytest_cache
+rootdir: D:\¼òÀúÏîÄ¿\agent-frame
+configfile: pytest.ini
+plugins: anyio-4.12.1, langsmith-0.7.24, asyncio-1.4.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 30 items
+
+tests/test_agent.py::TestBaseAgent::test_agent_creation PASSED           [  3%]
+tests/test_agent.py::TestBaseAgent::test_mount_memory PASSED             [  6%]
+tests/test_agent.py::TestBaseAgent::test_mount_tools PASSED              [ 10%]
+tests/test_agent.py::TestBaseAgent::test_no_memory_default PASSED        [ 13%]
+tests/test_agent.py::TestBaseAgent::test_run_without_tools PASSED        [ 16%]
+tests/test_agent.py::TestBaseAgent::test_run_with_tools PASSED           [ 20%]
+tests/test_agent.py::TestBaseAgent::test_system_prompt_override PASSED   [ 23%]
+tests/test_dispatcher.py::TestDispatcher::test_register_worker PASSED    [ 26%]
+tests/test_dispatcher.py::TestDispatcher::test_register_multiple_workers PASSED [ 30%]
+tests/test_dispatcher.py::TestDispatcher::test_run_simple PASSED         [ 33%]
+tests/test_dispatcher.py::TestDispatcher::test_run_with_subtasks PASSED  [ 36%]
+tests/test_dispatcher.py::TestDispatcher::test_planning_fallback PASSED  [ 40%]
+tests/test_memory.py::TestSlidingWindowMemory::test_add_and_context PASSED [ 43%]
+tests/test_memory.py::TestSlidingWindowMemory::test_window_overflow PASSED [ 46%]
+tests/test_memory.py::TestSlidingWindowMemory::test_clear PASSED         [ 50%]
+tests/test_memory.py::TestSlidingWindowMemory::test_max_tokens_truncation PASSED [ 53%]
+tests/test_memory.py::TestNoMemory::test_no_memory PASSED                [ 56%]
+tests/test_tools.py::TestToolRegistry::test_register_single_tool PASSED  [ 60%]
+tests/test_tools.py::TestToolRegistry::test_register_decorator PASSED    [ 63%]
+tests/test_tools.py::TestToolRegistry::test_tool_schema_generation PASSED [ 66%]
+tests/test_tools.py::TestToolRegistry::test_tool_call PASSED             [ 70%]
+tests/test_tools.py::TestToolRegistry::test_tool_not_found PASSED        [ 73%]
+tests/test_tools.py::TestToolRegistry::test_unregister PASSED            [ 76%]
+tests/test_tools.py::TestToolRegistry::test_get_schemas PASSED           [ 80%]
+tests/test_tools.py::TestToolRegistry::test_call_with_json_string_args PASSED [ 83%]
+tests/test_tools.py::TestBuiltinTools::test_calculator PASSED            [ 86%]
+tests/test_tools.py::TestBuiltinTools::test_calculator_sqrt PASSED       [ 90%]
+tests/test_tools.py::TestBuiltinTools::test_str_length PASSED            [ 93%]
+tests/test_tools.py::TestBuiltinTools::test_json_parser PASSED           [ 96%]
+tests/test_tools.py::TestBuiltinTools::test_current_time PASSED          [100%]
+
+============================= 30 passed in 0.07s ==============================
