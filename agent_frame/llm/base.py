@@ -31,13 +31,16 @@ class BaseProvider(ABC):
     @abstractmethod
     async def generate_with_tools(
         self,
-        prompt: str,
-        system_prompt: str = "",
+        messages: list[dict[str, Any]],
         tools: list[dict[str, Any]] | None = None,
         temperature: float = 0.3,
         max_tokens: int = 4096,
     ) -> dict[str, Any]:
-        """带工具调用的生成，返回 {"content": str, "tool_calls": list | None}。"""
+        """带工具调用的生成，返回 {"content": str, "tool_calls": list | None}。
+
+        接收完整的 chat messages 列表（含 system / user / assistant / tool 角色），
+        以保留多轮工具调用的完整上下文。
+        """
         ...
 
     @property

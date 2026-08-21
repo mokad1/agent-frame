@@ -133,8 +133,7 @@ class BaseAgent:
             # ── THINK：LLM 决定下一步 ──────────────────
             if tools_schema:
                 response = await self.provider.generate_with_tools(
-                    prompt=messages[-1]["content"],
-                    system_prompt=system_prompt,
+                    messages=messages,
                     tools=tools_schema,
                     temperature=config.agent_temperature,
                 )
@@ -164,25 +163,30 @@ class BaseAgent:
                 return final_answer
 
             # ── ACT：执行工具调用 ──────────────────────
+            # 一条 assistant 消息承载所有 tool_calls（标准 OpenAI 协议）
+            messages.append({
+                "role": "assistant",
+                "content": response.get("content") or None,
+                "tool_calls": [
+                    {
+                        "id": tc["id"],
+                        "type": "function",
+                        "function": {
+                            "name": tc["name"],
+                            "arguments": tc["arguments"] if isinstance(tc["arguments"], str)
+                            else json.dumps(tc["arguments"], ensure_ascii=False),
+                        },
+                    }
+                    for tc in tool_calls
+                ],
+            })
+
+            # 每个工具调用对应一条 tool 消息，注入执行结果
             for tc in tool_calls:
                 tool_name = tc["name"]
                 tool_args = tc["arguments"]
                 tool_result = self._tools.call(tool_name, tool_args)
 
-                # 将工具结果注入 messages
-                messages.append({
-                    "role": "assistant",
-                    "content": None,
-                    "tool_calls": [{
-                        "id": tc["id"],
-                        "type": "function",
-                        "function": {
-                            "name": tool_name,
-                            "arguments": tool_args if isinstance(tool_args, str)
-                            else json.dumps(tool_args, ensure_ascii=False),
-                        },
-                    }],
-                })
                 messages.append({
                     "role": "tool",
                     "tool_call_id": tc["id"],

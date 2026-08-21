@@ -72,24 +72,19 @@ class OpenAICompatibleProvider(BaseProvider):
 
     async def generate_with_tools(
         self,
-        prompt: str,
-        system_prompt: str = "",
+        messages: list[dict[str, Any]],
         tools: list[dict[str, Any]] | None = None,
         temperature: float = 0.3,
         max_tokens: int = 4096,
     ) -> dict[str, Any]:
         """带工具调用的生成。
 
+        接收完整的 chat messages 列表，保留多轮工具调用上下文。
         适配三家不同的 Function Calling 格式：
         - OpenAI: tools + tool_choice
         - DeepSeek: tools (OpenAI 兼容)
         - Qwen: tools（通过 compatible-mode 兼容）
         """
-        messages: list[dict[str, Any]] = []
-        if system_prompt:
-            messages.append({"role": "system", "content": system_prompt})
-        messages.append({"role": "user", "content": prompt})
-
         body: dict[str, Any] = {
             "model": self.model,
             "messages": messages,

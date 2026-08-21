@@ -24,7 +24,7 @@ class MockProvider:
         self.call_count += 1
         return resp
 
-    async def generate_with_tools(self, prompt: str, system_prompt: str = "", tools: list | None = None, temperature: float = 0.3, max_tokens: int = 4096) -> dict:
+    async def generate_with_tools(self, messages: list | None = None, tools: list | None = None, temperature: float = 0.3, max_tokens: int = 4096) -> dict:
         if self.tool_call_mode and self.call_count == 0:
             self.call_count += 1
             return {
